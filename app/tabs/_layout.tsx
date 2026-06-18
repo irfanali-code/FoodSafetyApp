@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { View, Text, Button, Modal, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -7,19 +8,76 @@ export default function TabLayout() {
 
   return (
     <>
-      <Tabs screenOptions={{ 
-        headerShown: true, 
-        
+      <Tabs screenOptions={{
+        headerShown: true,
+
         // 1. THIS IS THE FIX: It forces a global title for every tab
-        headerTitle: 'Food Safety App', 
-        
+        headerTitle: 'Food Safety App',
+
         // 2. The global login button
         headerRight: () => (
           <View style={{ marginRight: 15 }}>
             <Button title="Login" onPress={() => setModalVisible(true)} />
           </View>
-        )
-      }} />
+        ),
+
+        // 3. Active/inactive tint colors for the tab icons
+        tabBarActiveTintColor: '#2e78b7',
+        tabBarInactiveTintColor: '#8e8e93',
+      }}>
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: 'Home',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'home' : 'home-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="CheckProduct"
+          options={{
+            title: 'Check Product',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'search' : 'search-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="report"
+          options={{
+            title: 'Report',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'flag' : 'flag-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="StaySafe"
+          options={{
+            title: 'Stay Safe',
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'shield-checkmark' : 'shield-checkmark-outline'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+      </Tabs>
 
       {/* The Login Popup (Modal) remains exactly the same */}
       <Modal
@@ -32,21 +90,21 @@ export default function TabLayout() {
           <View style={styles.popupBox}>
             <Text style={styles.title}>Account Login</Text>
 
-            <TextInput 
-              style={styles.input} 
-              placeholder="Email or Phone Number" 
+            <TextInput
+              style={styles.input}
+              placeholder="Email or Phone Number"
               keyboardType="email-address"
               autoCapitalize="none"
             />
 
-            <TextInput 
-              style={styles.input} 
-              placeholder="Password" 
-              secureTextEntry={true} 
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry={true}
             />
 
-            <TouchableOpacity 
-              style={styles.submitButton} 
+            <TouchableOpacity
+              style={styles.submitButton}
               onPress={() => {
                 alert('Logging you in...');
                 setModalVisible(false);
@@ -55,8 +113,8 @@ export default function TabLayout() {
               <Text style={styles.submitText}>Submit</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
-              style={styles.cancelButton} 
+            <TouchableOpacity
+              style={styles.cancelButton}
               onPress={() => setModalVisible(false)}
             >
               <Text style={styles.cancelText}>Cancel</Text>
